@@ -41,7 +41,7 @@ pipeline {
             steps {
                 withKubeConfig([credentialsId: "${KUBE_CONFIG_CREDENTIALS_ID}"]) {
                     sh '''
-                    kubectl set image deployment/your-deployment your-container=${IMAGE_TAG} --record
+                    kubectl set image deployment/adservice adservice=${IMAGE_TAG} -n jenkins --record
                     '''
                 }
             }
