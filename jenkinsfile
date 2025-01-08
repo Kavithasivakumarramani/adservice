@@ -39,12 +39,18 @@ pipeline {
         }
         stage('Deploy to Kubernetes') {
             steps {
-                
+
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: "${AWS_CREDENTIALS_ID}"]]) {
                     sh '''
+                    
                     aws eks update-kubeconfig --name cluster --region us-east-1
                 
                     kubectl set image deployment/adservice adservice=${IMAGE_TAG} -n jenkins --record
+
                     '''
+                }
+                
+
                 
             }
         }
