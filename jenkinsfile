@@ -39,6 +39,9 @@ pipeline {
         }
         stage('Deploy to Kubernetes') {
             steps {
+
+                export PATH=$PATH:/path/to/kubectl
+
                 withKubeConfig([credentialsId: "${KUBE_CONFIG_CREDENTIALS_ID}"]) {
                     sh '''
                     kubectl set image deployment/adservice adservice=${IMAGE_TAG} -n jenkins --record
